@@ -1,0 +1,77 @@
+{% extends 'base.html' %} {% load static %} {% load widget_tweaks %}
+<!-- .. -->
+{% block content %}
+<div class="w-[595px] font-poppins py-4 px-2 text-secondary">
+  <a href="{% url 'main' %}" class="text-[24px] font-light"
+    ><i class="fa fa-arrow-left"></i
+  ></a>
+  {% if blog.image %}
+  <img src="{{blog.image.url}}" alt="" class="w-[590px] h-[217px] rounded-lg" />
+  {% endif %}
+  <div class="flex items-center gap-2 mt-2">
+    {% if blog.author.avatar %}
+    <img
+      src="{{blog.author.avatar.url}}"
+      alt=""
+      class="w-10 h-10 rounded-full"
+    />
+    {% else %}
+    <img
+      src="{% static 'images/default-pfp.png' %}"
+      alt=""
+      class="w-10 h-10 rounded-full"
+    />
+    {% endif %}
+    <div>
+      <p>{{blog.author}}</p>
+      <p class="text-[11px]">{{blog.created_at}}</p>
+    </div>
+  </div>
+  <article class="mt-3">
+    <h1 class="text-[28px] font-extrabold text-gray-900">{{blog.title}}</h1>
+    <p class="text-[15px] text-gray-800 mt-2">{{blog.content|linebreaksbr}}</p>
+  </article>
+  <div class="border-b border-accent">
+    <p class="font-medium mt-3">Comments</p>
+  </div>
+  <div class="mt-2 max-h-[400px] overflow-y-auto">
+    {% for comment in comments %}
+    <div class="flex items-center gap-2 mt-2">
+      {% if comment.user.avatar %}
+      <img
+        src="{{comment.user.avatar.url}}"
+        alt="avatar"
+        srcset=""
+        class="w-10 h-10 rounded-full border-2 border-accent"
+      />
+      {% else %}
+      <img
+        src="{% static 'images/default-pfp.png' %}"
+        alt="avatar"
+        srcset=""
+        class="w-10 h-10 rounded-full border-2 border-accent"
+      />
+      {% endif %}
+      <div>
+        <p class="text-gray-800 font-medium">{{comment.user}}</p>
+        <p class="text-gray-700">{{comment.content}}</p>
+      </div>
+    </div>
+    <!-- ..  -->
+    {%endfor%}
+  </div>
+  <form action="" method="POST" class="mt-2 text-gray-700">
+    {% csrf_token %}
+    <label for="">Add comment:</label>
+    <div>
+      {%render_field comment_form.content class="border-accent" cols="38"%}
+    </div>
+    <button
+      type="submit"
+      class="float-right py-2 px-9 font-normal text-base text-primary bg-accent rounded-xl"
+    >
+      Add
+    </button>
+  </form>
+</div>
+{% endblock %}

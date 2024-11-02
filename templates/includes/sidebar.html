@@ -1,0 +1,65 @@
+{% load static %}
+
+<div class="h-screen py-14 w-1/4 flex flex-col bg-secondary text-primary">
+  <h1 class="font-serif font-bold text-[36px] text-center">Mind Writes</h1>
+  <div class="text-[18px] font-medium ml-4 mb-7 py-6 pl-8 w-[250px] border-b-2">
+    <a href="{% url 'main' %}" class="mb-2 cursor-pointer">
+      <span><i class="fa-solid fa-book-open mr-3 text-[22px]"></i></span
+      >Articles
+    </a>
+    <a href="{% url 'create_blog' %}" class="cursor-pointer">
+      <span><i class="fa-regular fa-pen-to-square mr-3 text-[22px]"></i></span
+      >Write
+    </a>
+  </div>
+  <div class="flex flex-col justify-center items-center">
+    {% if user.is_authenticated %}
+    <div class="flex items-center justify-between w-[260px] pr-3">
+      <a href="{% url 'profile' %}">
+        <div class="flex items-center gap-2">
+          {% if user.avatar %}
+          <img
+            src="{{user.avatar.url}}"
+            class="rounded-full w-10 h-10 border-2 border-primary"
+            srcset=""
+          />
+          {% else %}
+          <img
+            src="{% static 'images/default-pfp.png' %}"
+            class="rounded-full w-10 h-10 border-2 border-primary"
+            srcset=""
+          />
+          {% endif %}
+
+          <div>
+            <p class="font-medium">{{user.first_name}} {{user.last_name}}</p>
+            <p class="text-[12px]">{{user.username}}</p>
+          </div>
+        </div>
+      </a>
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+
+        <button type="submit" class="text-red-400">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </form>
+    </div>
+    {% else %}
+    <a href="{% url 'login' %}">
+      <button
+        class="border-2 w-40 px-4 py-1 rounded-2xl bg-primary text-secondary text-[20px] font-semibold"
+      >
+        Login
+      </button>
+    </a>
+    <a href="{% url 'signup' %}">
+      <button
+        class="border-2 border-primary w-40 px-4 py-1 mt-2 rounded-2xl text-[20px] font-semibold hover:bg-primary hover:text-secondary"
+      >
+        Register
+      </button>
+    </a>
+    {% endif%}
+  </div>
+</div>

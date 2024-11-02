@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
+<div class="w-[500px] font-poppins">
+  <h1 class="text-[32px] text-secondary font-semibold mb-7">Login</h1>
+  <div class="mb-5">
+    <h3 class="font-medium text-[24px] text-accent mb-3">
+      Login to your account
+    </h3>
+    <p class="text-[15px] text-gray-700 font-normal">
+      Unlock your ideas and inspire others. Share your thoughts, and let's grow
+      together.
+    </p>
+  </div>
+  <form action="{% url 'login' %}" method="POST" id="login_form">
+    {% csrf_token %}
+
+    <!-- get the next url of the user-->
+    <input type="hidden" name="next" value="{{request.GET.next}}" />
+    <div class="mb-2">
+      <p class="text-[18px] font-medium text-gray-700">Username</p>
+      {% render_field form.username class="rounded-md bg-primary w-[100%]"%}
+    </div>
+    <div>
+      <p class="text-[18px] font-medium text-gray-700">Password</p>
+      {% render_field form.password class="rounded-md bg-primary w-[100%]" %}
+    </div>
+
+    {% if form.non_field_errors %}
+    <div class="text-red-600">
+      {% for error in form.non_field_errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </form>
+
+  <div class="mt-7 flex flex-col items-center">
+    <button
+      class="border-2 py-2 px-4 w-[210px] rounded-xl text-[18px] text-primary font-medium bg-accent"
+      form="login_form"
+      type="submit"
+    >
+      Login
+    </button>
+    <p class="font-medium text-[16px] text-gray-700 mt-2">
+      Don't have any account?<span
+        ><a href="{% url 'signup' %}" class="text-secondary">Register</a></span
+      >
+    </p>
+  </div>
+</div>
+{% endblock %}

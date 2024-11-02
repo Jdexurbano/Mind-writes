@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
+<!-- prettier-ignore-start -->
+<div>
+  <form
+    action="{% url 'create_blog' %}"
+    method="POST"
+    enctype="multipart/form-data"
+    id="add_form"
+  >
+    {% csrf_token %}
+    <!-- title -->
+    <label for="title">Title</label>
+    <div>
+      {% render_field form.title class="w-[500px] bg-primary rounded-md"%}
+    </div>
+
+    <!-- content -->
+    <label for="content">Content</label>
+    <div>
+      {% render_field form.content class="w-[500px] bg-primary rounded-md" %}
+    </div>
+
+    <!-- image -->
+    <label for="image"></label>
+    <div>{% render_field form.image %}</div>
+  </form>
+  <a href="{% url 'main' %}">
+    <button
+      class="mt-6 rounded-xl bg-red-500 py-2 px-4 ml-2 text-gray-200 text-[18px] font-medium float-right"
+    >
+      Cancel
+    </button>
+  </a>
+  <button
+    type="submit"
+    form="add_form"
+    class="mt-6 rounded-xl bg-accent py-2 px-4 text-gray-200 text-[18px] font-medium float-right"
+  >
+    Published
+  </button>
+</div>
+{%endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- main -->
+
+{% for blog in blogs %}
+<div
+  class="border-2 border-gray-300 w-[500px] max-h-[550px] px-4 py-5 rounded-lg font-poppins"
+>
+  {% if blog.image %}
+  <img src="{{blog.image.url}}" alt="" class="h-[200px] w-[500px] rounded-lg" />
+  {% endif %}
+  <div class="flex items-center gap-2 mt-2">
+    {% if blog.author.avatar %}
+    <img
+      src="{{blog.author.avatar.url}}"
+      alt=""
+      class="w-10 h-10 rounded-full border-2 border-accent"
+    />
+    {% else %}
+    <img
+      src="{% static 'images/default-pfp.png' %}"
+      alt=""
+      class="w-10 h-10 rounded-full border-2 border-accent"
+    />
+    {% endif %}
+    <p class="text-[15px]">{{blog.author}}</p>
+  </div>
+  <article class="max-h-[180px]">
+    <h1 class="font-semibold text-[24px] text-gray-800">{{blog.title}}</h1>
+    <p class="text-[15px] text-gray-700">{{blog.content|truncatechars:260}}</p>
+  </article>
+  <p class="text-[15px] text-gray-500 mt-2">{{blog.created_at}}</p>
+
+  <a href="{% url 'blog_detail' blog.pk %}"
+    ><button class="float-right py-2 px-7 bg-accent text-gray-100 rounded-lg">
+      Read
+    </button>
+  </a>
+</div>
+
+{% endfor %} {% endblock %}

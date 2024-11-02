@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% load widget_tweaks %} {% block content %}
+<form
+  action="{%  url 'update_blog' blog.pk %}"
+  method="POST"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+  <!-- title -->
+  <label for="title">Title</label>
+  <div>
+    {% render_field form.title class="w-[500px] bg-primary rounded-md"%}
+  </div>
+  <br />
+  <!-- content -->
+  <label for="content">Content</label>
+  <div>
+    {% render_field form.content class="w-[500px] bg-primary rounded-md" %}
+  </div>
+  <br />
+  <!-- image -->
+  <label for="image"></label>
+  <div>{% render_field form.image %}</div>
+
+  <div class="float-right">
+    <button
+      type="submit"
+      class="mt-6 rounded-xl border-1 border-accent bg-accent py-[6px] px-4 text-gray-200 text-[18px] font-medium"
+    >
+      Update
+    </button>
+    <a
+      href="{% url 'profile' %}"
+      class="mt-6 rounded-xl border-2 border-accent py-2 px-4 text-gray-700 text-[18px] font-medium hover:bg-accent hover:text-gray-200"
+    >
+      Cancel
+    </a>
+  </div>
+</form>
+{%endblock %}
